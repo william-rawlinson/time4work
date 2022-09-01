@@ -1,84 +1,72 @@
-let timer = document.querySelector('.timer');
-timer.addEventListener('click',timerClick);
-timer.textContent = '00:00:00';
+let addTimerButton = document.querySelector('.addTimer');
+addTimerButton.addEventListener('click',addTimer);
+let contentBanner2 = document.querySelector('.contentBanner2');
+let projects = [];
 
-var running = false;
-var id = 0;
-var start = 0;
-var lastUpdateTime = 0;
-var time = 0
+function addTimer (){
+    let projName = prompt('Please enter the project name','Untitled project'); // replace with form validation(no same name twice)
+    let timer = document.createElement('div');
+    let timerTitle = document.createElement('p');
+    let display = document.createElement('div');
+    let startButton = document.createElement('button');
+    timer.classList.add('circle');
+    timerTitle.textContent = projName;
+    display.classList.add('display');
+    display.setAttribute('id',projName);
+    display.textContent = '00:00:00';
+    startButton.classList.add('startTimer');
+    startButton.textContent = 'Start Timer?'
+    timer.append(timerTitle);
+    timer.append(display);
+    timer.append(startButton);
+    contentBanner2.append(timer);
+    let timerObj = new timerConstructor(projName);
+    projects.push(timerObj);
+    console.log(projects);
+    startButton.addEventListener('click',()=>timerClick(projName)); 
+}
 
-function timerClick (){ 
-    start = Date.now();
-    console.log(`time on click = ${time}`);
-    if (running == true){
-        clearInterval(id);
-        running = false;
+function timerConstructor (projName){
+    this.projName = projName;
+    this.display = document.getElementById(projName)
+    this.running = false;
+    this.id = 0;
+    this.start = 0;
+    this.lastUpdateTime = 0;
+    this.time = 0;
+    this.hours = 0;
+    this.mins = 0;
+    this.seconds = 0;
+    this.update = updateTimer;
+}
+
+function timerClick (projName){  
+    let target = projects[projects.findIndex((element)=> element.projName == projName)]; 
+    target.start = Date.now();
+    if (target.running == true){
+        clearInterval(target.id);
+        target.running = false;
     }
     else {
-        id = setInterval(updateTimer2,1000)
+        target.id = setInterval(()=>target.update(),1000)
+        target.running = true;
     }
 }
 
-function updateTimer2(){
-
-    running = true;
-    if (time > 3600*24*1000){
-        clearInterval(id);
+function updateTimer(){  
+    if (this.time > 3600*24*1000){
+        clearInterval(this.id);
+        this.running = false;
         return
     }
     let now = Date.now();
-    console.log(`time prior to update = ${time}`);
-    time = time + now - Math.max(start,lastUpdateTime);
-    console.log(`time on update = ${time}`);
-    let x = Math.floor(time/1000);
-    let hours = 0;
-    let mins = 0;
-    let seconds = 0;
-    Math.floor(x/3600) <= 9 ? hours = `0${Math.floor(x/3600)}`: hours = Math.floor(x/3600);
-    Math.floor(x/60)-hours*60<=9 ? mins = `0${Math.floor(x/60)- hours*60}`: mins = Math.floor(x/60)- hours*60;
-    Math.floor(x - hours*3600 - mins*60)<=9 ? seconds = `0${x - hours*3600 - mins*60}` : seconds = x - hours*3600 - mins*60;
-    timer.textContent = `${hours}:${mins}:${seconds}`;
-    lastUpdateTime = Date.now();
-    
+    this.time = this.time + now - Math.max(this.start,this.lastUpdateTime);
+    let x = Math.floor(this.time/1000);
+    Math.floor(x/3600) <= 9 ? this.hours = `0${Math.floor(x/3600)}`: this.hours = Math.floor(x/3600);
+    Math.floor(x/60)-this.hours*60<=9 ? this.mins = `0${Math.floor(x/60)- this.hours*60}` : this.mins = Math.floor(x/60)- this.hours*60;
+    Math.floor(x - this.hours*3600 - this.mins*60)<=9 ? this.seconds = `0${x - this.hours*3600 - this.mins*60}` : this.seconds = x - this.hours*3600 - this.mins*60;
+    this.display.textContent = `${this.hours}:${this.mins}:${this.seconds}`; 
+    this.lastUpdateTime = Date.now();
 }
 
 
-
-
-
-
-function updateTimer(){ 
-    running = true;
-    let x = +(timer.textContent.substring(0,2))*3600    + 
-                +(timer.textContent.substring(3,5))*60  +
-                +(timer.textContent.substring(6));
-    if (x >= 3600*24){
-        clearInterval(id);
-        return
-    }
-    let now = Date.now();
-    x += Math.floor((now - (start+x*1000))/1000)
-    // get current time, add x to Date.now add difference to x
-    let hours = 0;
-    let mins = 0;
-    let seconds = 0;
-    Math.floor(x/3600) <= 9 ? hours = `0${Math.floor(x/3600)}`: hours = Math.floor(x/3600);
-    Math.floor(x/60)-hours*60<=9 ? mins = `0${Math.floor(x/60)- hours*60}`: mins = Math.floor(x/60)- hours*60;
-    Math.floor(x - hours*3600 - mins*60)<=9 ? seconds = `0${x - hours*3600 - mins*60}` : seconds = x - hours*3600 - mins*60;
-    timer.textContent = `${hours}:${mins}:${seconds}`;
-    console.log(start);
-    console.log(now);
-}
-
-
-
-// load script, get start time in ms
-// just thinking if the button is clicked once
-// button clicked at start + wait ms
-// button updated at start + wait + lag ms
-// how to calculate start + wait + lag? 
-// inside update timer, we can do Date.now, to give us ms at time of updating
-// but now - start = wait + button time, don't know wait, so can't give button time
-// so need to track wait?
-// declare start when the button is clicked?

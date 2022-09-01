@@ -1,38 +1,99 @@
-.C2-Ai {
-    background-color: yellow;
-    border-style: solid;
-    border-color: black;
-    border-radius: 50%;
-    height: 30vh;
-    width: 30vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-    flex-wrap: wrap;
-}
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.header, .footer {
+    background-color: #05386b;
     width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #edf5e1;
+    font-size: 2vh;
+    font-weight: bold;
 }
 
-.container {
+.content {
+    background-color: #edf5e1;
+    width: 100vw;
+    height: 80vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
-.timer {
-    background-color: black;
-    height: 5vh;
-    width: 10vh;
-    color: rgb(46, 16, 243);
+.contentHeader {
+    background-color: #379683;
+    width: 100vw;
+    height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1vh;
+    color: #edf5e1;
+    font-size: 2vh;
 }
+
+.contentBanner1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 10vh;
+    background-color: #8ee4af;
+}
+
+.contentBanner2 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+
+button {
+    font-size: 2vh;
+    color: #edf5e1;
+    width: 5vw;
+    height: auto;
+    background-color: #05386b;
+    border-radius: 1vh;
+    border-width: 0.5vh;
+    border-color: #edf5e1;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10vw;
+    height: 25vh;
+    background-color: #05386b;
+    border-radius: 1vh;
+    margin: 5vh;
+}
+
+.circle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10vw;
+    height: 25vh;
+    background-color: #05386b;
+    border-radius: 50%;
+    margin: 5vh;
+    font-size: 2vh;
+    font-weight: bold;
+    color: #edf5e1;
+}
+
+.display {
+    background-color: rgb(82, 170, 181);
+    width: 5vw;
+    height: 3vh;
+    color: rgb(167, 251, 0);
+    font-size: 2vh;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5vh;
+}
+
