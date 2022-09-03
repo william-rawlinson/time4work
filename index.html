@@ -9,13 +9,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">Project X</div>
+    <div class="header">Timesheet Report Project - William Rawlinson</div>
     <div class="content">
         <div class="contentHeader">
-            User instructions go here
+            Use the text box and button below to name and add a project timer
         </div>
         <div class="contentBanner1">
-            <button class="addTimer">Add timer +</button>
+            <form name="projNameInputForm" class="projNameInputForm" onsubmit="return false">
+                <input type="text" name="projNameInput" class="projNameInput">
+                <button type ="button" class="addTimer" onclick="addTimer()">+</button>
+            </form>
         </div>
         <div class="contentBanner2">
             <!-- <div class="circle">
@@ -27,6 +30,6 @@
         <div class ='contentFooter'>
         </div>
     </div>  
-    <div class="footer">Project X</div>
+    <div class="footer">Timesheet Report Project - William Rawlinson</div>
 </body>
 </html>

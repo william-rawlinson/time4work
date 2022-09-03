@@ -1,10 +1,17 @@
-let addTimerButton = document.querySelector('.addTimer');
-addTimerButton.addEventListener('click',addTimer);
 let contentBanner2 = document.querySelector('.contentBanner2');
 let projects = [];
+let form = document.querySelector('.projNameInputForm')
 
 function addTimer (){
-    let projName = prompt('Please enter the project name','Untitled project'); // replace with form validation(no same name twice)
+    let projName = form.projNameInput.value;
+    if (projName == ''){
+        return;
+    }
+    if (projects.findIndex((element)=> element.projName == projName)!= -1){
+        alert('This project name is already in use');
+        return;
+    }
+    form.projNameInput.value = '';
     let timer = document.createElement('div');
     let timerTitle = document.createElement('p');
     let display = document.createElement('div');
@@ -12,9 +19,10 @@ function addTimer (){
     timer.classList.add('circle');
     timerTitle.textContent = projName;
     display.classList.add('display');
-    display.setAttribute('id',projName);
+    display.setAttribute('id',projName + 'display');
     display.textContent = '00:00:00';
     startButton.classList.add('startTimer');
+    startButton.setAttribute('id',projName + 'button')
     startButton.textContent = 'Start Timer?'
     timer.append(timerTitle);
     timer.append(display);
@@ -22,13 +30,13 @@ function addTimer (){
     contentBanner2.append(timer);
     let timerObj = new timerConstructor(projName);
     projects.push(timerObj);
-    console.log(projects);
     startButton.addEventListener('click',()=>timerClick(projName)); 
 }
 
 function timerConstructor (projName){
     this.projName = projName;
-    this.display = document.getElementById(projName)
+    this.display = document.getElementById(projName + 'display');
+    this.startButton = document.getElementById(projName + 'button');
     this.running = false;
     this.id = 0;
     this.start = 0;
@@ -37,8 +45,13 @@ function timerConstructor (projName){
     this.hours = 0;
     this.mins = 0;
     this.seconds = 0;
-    this.update = updateTimer;
+    // this.update = updateTimer;
 }
+
+timerConstructor.prototype = {
+    update: updateTimer
+}
+
 
 function timerClick (projName){  
     let target = projects[projects.findIndex((element)=> element.projName == projName)]; 
@@ -46,10 +59,16 @@ function timerClick (projName){
     if (target.running == true){
         clearInterval(target.id);
         target.running = false;
+        target.startButton.classList.remove('stopTimer');
+        target.startButton.classList.add('startTimer');
+        target.startButton.textContent = 'Start timer?';
     }
     else {
         target.id = setInterval(()=>target.update(),1000)
         target.running = true;
+        target.startButton.classList.remove('startTimer');
+        target.startButton.classList.add('stopTimer');
+        target.startButton.textContent = 'Stop timer?';
     }
 }
 

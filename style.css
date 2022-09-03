@@ -36,6 +36,7 @@
     width: 100vw;
     height: 10vh;
     background-color: #8ee4af;
+    flex-direction: row;
 }
 
 .contentBanner2 {
@@ -44,7 +45,30 @@
     flex-wrap: wrap;
 }
 
+.startTimer {
+    background-color: rgb(34, 224, 34);
+}
 
+.stopTimer {
+    background-color: red; 
+
+}
+
+.addTimer {
+    width: 2vw;
+    height: 4vh;
+    margin-left: 1vw;
+}
+
+.projNameInput {
+    font-size: 2vh;
+}
+
+.projNameInputForm {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
 
 button {
     font-size: 2vh;
@@ -55,6 +79,9 @@ button {
     border-radius: 1vh;
     border-width: 0.5vh;
     border-color: #edf5e1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
